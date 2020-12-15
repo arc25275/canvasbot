@@ -6,7 +6,6 @@
   "author": "arc25275",
   "dependencies": {
     "discord.js": "^12.5.1",
-    "dotenv": "^8.2.0",
     "winston": "^3.3.3"
   }
 }

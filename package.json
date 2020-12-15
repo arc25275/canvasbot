@@ -1,0 +1,8 @@
+
+“name”: “Homework Bot”,
+“version”: “1.0.0”,
+“description”: “Bot to help with homework”,
+“main”: “bot.js”,
+“author”: “arc25275”,
+“dependencies”: {}
+}

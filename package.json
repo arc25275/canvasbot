@@ -1,8 +1,11 @@
 {
-"name": "Homework Bot",
-"version": "1.0.0",
-"description": "Bot to help with homework",
-"main": "bot.js",
-"author": "arc25275",
-"dependencies": {}
+  "name": "Homework Bot",
+  "version": "1.0.0",
+  "description": "Bot to help with homework",
+  "main": "bot.js",
+  "author": "arc25275",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "winston": "^3.3.3"
+  }
 }

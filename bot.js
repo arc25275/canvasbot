@@ -8,19 +8,21 @@ bot.login(TOKENS.BOT_TOKEN);
 
 bot.on("ready", () => {
   console.info(`Logged in as ${bot.user.tag}!`);
+});
 
-  bot.on("message", (message) => {
-    if (message.author.bot) return; //Prevents responding to other bots
-    if (message.content.indexOf(prefix) !== 0) return; //Makes sure there is a prefix
-    const args = message.content.slice(prefix.length).trim().split(/ +/g); //gets arguments
-    const command = args.shift().toLowerCase();
-    let link = args[0];
-    //Commands:
-    if (command === "assignment") {
-      const embed1 = getAssignment(prefix, link, TOKENS.CANVAS_TOKEN); // .assignment <Link to assignment>
-      message.channel.send(embed1);
-    } else if (command === "page") {
-      getPage(prefix, link, TOKENS.CANVAS_TOKEN);
-    }
-  });
+bot.on("message", async (message) => {
+  if (message.author.bot) return; //Prevents responding to other bots
+  if (message.content.indexOf(prefix) !== 0) return; //Makes sure there is a prefix
+  const args = message.content.slice(prefix.length).trim().split(/ +/g); //gets arguments
+  const command = args.shift().toLowerCase();
+  let link = args[0];
+
+  /* Commands: */
+  if (command === "assignment") {
+    const assignment = await getAssignment(prefix, link, TOKENS.CANVAS_TOKEN); // .assignment <Link to assignment>
+    message.channel.send(assignment);
+  } else if (command === "page") {
+    const page = await getPage(prefix, link, TOKENS.CANVAS_TOKEN); // .page <Link to page>
+    message.channel.send(page);
+  }
 });

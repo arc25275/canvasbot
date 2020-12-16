@@ -11,11 +11,18 @@ module.exports = async function getPage(prefix, link, canvas_token) {
   ).then((res) => res.json().catch((err) => console.log(err)));
   var embedBody = turndownService.turndown(result.body);
   embedBody = embedBody.replace(/#+/g, "");
-  const pageEmbed = new Discord.MessageEmbed()
-    .setColor("#0099ff")
-    .setTitle(result.name)
-    .setURL(link)
-    .setDescription(embedBody);
-
-  message.channel.send(pageEmbed);
+  if (result.body.length > 6000) {
+    const errorEmbed = new Discord.MessageEmbed().setDescription(
+      `Message too Large [Link](${link})`
+    );
+    return errorEmbed;
+    //Temporary
+  } else {
+    const pageEmbed = new Discord.MessageEmbed()
+      .setColor("#0099ff")
+      .setTitle(result.name)
+      .setURL(link)
+      .setDescription(embedBody);
+    return pageEmbed;
+  }
 };

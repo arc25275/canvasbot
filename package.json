@@ -6,6 +6,8 @@
   "author": "arc25275",
   "dependencies": {
     "discord.js": "^12.5.1",
+    "node-fetch": "^2.6.1",
+    "turndown": "^7.0.0",
     "winston": "^3.3.3"
   }
 }

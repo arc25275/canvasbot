@@ -14,11 +14,13 @@ bot.on("ready", () => {
     if (message.content.indexOf(prefix) !== 0) return; //Makes sure there is a prefix
     const args = message.content.slice(prefix.length).trim().split(/ +/g); //gets arguments
     const command = args.shift().toLowerCase();
+    let link = args[0];
     //Commands:
     if (command === "assignment") {
-      getAssignment(prefix, args, TOKENS.CANVAS_TOKEN); // .assignment <Link to assignment>
+      const embed1 = getAssignment(prefix, link, TOKENS.CANVAS_TOKEN); // .assignment <Link to assignment>
+      message.channel.send(embed1);
     } else if (command === "page") {
-      getPage(prefix, args, TOKENS.CANVAS_TOKEN);
+      getPage(prefix, link, TOKENS.CANVAS_TOKEN);
     }
   });
 });

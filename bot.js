@@ -1,44 +1,24 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const fetch = require("node-fetch");
-const TurndownService = require("turndown");
-const turndownService = new TurndownService();
-const TOKENS = require("./auth.json");
-const prefix = ".";
-
-const body = { a: 1 };
+const getAssignment = require("./assignment.js");
+const getPage = require("./page.js");
+const TOKENS = require("./config/auth.json"); //Token Config (Discord and Canvas(Will be replaced with 0Auth2 in the future))
+const prefix = "."; //Bot Prefix
 bot.login(TOKENS.BOT_TOKEN);
 
 bot.on("ready", () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 
   bot.on("message", (message) => {
-    if (message.author.bot) return;
-    if (message.content.indexOf(prefix) !== 0) return;
-
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    if (message.author.bot) return; //Prevents responding to other bots
+    if (message.content.indexOf(prefix) !== 0) return; //Makes sure there is a prefix
+    const args = message.content.slice(prefix.length).trim().split(/ +/g); //gets arguments
     const command = args.shift().toLowerCase();
-
+    //Commands:
     if (command === "assignment") {
-      async function getAssignment() {
-        let link = args[0];
-        const links = link.split("/courses");
-        const apiLink = links[0] + "/api/v1/courses" + links[1];
-        const result = await fetch(
-          apiLink.concat("?access_token=" + TOKENS.CANVAS_TOKEN)
-        ).then((res) => res.json());
-        var embedDescription = turndownService.turndown(result.description);
-        embedDescription = embedDescription.replace(/#+/g, "");
-        const assignmentEmbed = new Discord.MessageEmbed()
-          .setColor("#0099ff")
-          .setTitle(result.name)
-          .setURL(link)
-          .setDescription(embedDescription)
-          .setFooter(result.due_at);
-
-        message.channel.send(assignmentEmbed);
-      }
-      getAssignment();
+      getAssignment(prefix, args, TOKENS.CANVAS_TOKEN); // .assignment <Link to assignment>
+    } else if (command === "page") {
+      getPage(prefix, args, TOKENS.CANVAS_TOKEN);
     }
   });
 });
